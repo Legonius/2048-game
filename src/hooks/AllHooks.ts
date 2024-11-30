@@ -6,6 +6,8 @@ type AllHooks = () => {
   numbers: number[][];
 };
 
+let shouldPopUp = false;
+
 export default function useAllHooks(): ReturnType<AllHooks> {
   const [numbers, setNumbers] = useState<number[][]>([
     [0, 0, 0, 0],
@@ -36,41 +38,21 @@ export default function useAllHooks(): ReturnType<AllHooks> {
     setNumbers(initialNumber);
   };
 
-  // random 2 pop up in free space;
-  const randomPopup = () => {
-    setNumbers((currentNumbers) => {
-      let newArr = currentNumbers.map((arr) => arr);
-
-      let add = false;
-      while (!add) {
-        const random1 = Math.floor(Math.random() * 4);
-        const random = Math.floor(Math.random() * 4);
-
-        if (newArr[random1][random] === 0) {
-          newArr[random1][random] = 2;
-          add = true;
-        }
-      }
-
-      return newArr;
-    });
-  };
-
   // handling arrow key
   const handleArrowKey = (ev: KeyboardEvent) => {
     if (ev.code === "ArrowLeft") {
       movingLeft();
-      randomPopup();
     } else if (ev.code === "ArrowRight") {
       movingRight();
-      randomPopup();
     } else if (ev.code === "ArrowUp") {
       movingUp();
-      randomPopup();
     } else if (ev.code === "ArrowDown") {
       movingDown();
-      randomPopup();
     }
+    setNumbers((prev) => {
+      randomPopup(prev);
+      return prev;
+    });
   };
 
   // algorithym for left key
@@ -82,6 +64,9 @@ export default function useAllHooks(): ReturnType<AllHooks> {
         tempArray[i] = filterZero(tempArray[i]);
         tempArray[i] = slideLeft(tempArray[i]);
         tempArray[i] = fillRow(tempArray[i]);
+      }
+      if (JSON.stringify(currentNumbers) !== JSON.stringify(tempArray)) {
+        shouldPopUp = true;
       }
       return tempArray;
     });
@@ -99,6 +84,9 @@ export default function useAllHooks(): ReturnType<AllHooks> {
         tempArray[i] = fillRow(tempArray[i]);
         tempArray[i].reverse();
       }
+      if (JSON.stringify(currentNumbers) !== JSON.stringify(tempArray)) {
+        shouldPopUp = true;
+      }
       return tempArray;
     });
   };
@@ -112,6 +100,9 @@ export default function useAllHooks(): ReturnType<AllHooks> {
         row[i] = filterZero(row[i]);
         row[i] = slideLeft(row[i]);
         row[i] = fillRow(row[i]);
+      }
+      if (JSON.stringify(currentNumbers) !== JSON.stringify(rowToColumn(row))) {
+        shouldPopUp = true;
       }
       return rowToColumn(row);
     });
@@ -128,6 +119,9 @@ export default function useAllHooks(): ReturnType<AllHooks> {
         row[i] = slideLeft(row[i]);
         row[i] = fillRow(row[i]);
         row[i].reverse();
+      }
+      if (JSON.stringify(currentNumbers) !== JSON.stringify(rowToColumn(row))) {
+        shouldPopUp = true;
       }
       return rowToColumn(row);
     });
@@ -151,6 +145,7 @@ const slideLeft = (row: number[]) => {
     if (row[j] === row[j + 1]) {
       row[j] *= 2;
       row[j + 1] = 0;
+      shouldPopUp = true;
     }
   }
   row = filterZero(row);
@@ -180,4 +175,42 @@ const rowToColumn = (row: number[][]) => {
     arr[i] = columntToRow(row, i);
   }
   return arr;
+};
+
+// checking empty space
+const checkSpace = (arr: number[][]) => {
+  let empty = false;
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      if (arr[i][j] === 0) {
+        empty = true;
+        return empty;
+      }
+    }
+  }
+  return empty;
+};
+
+// checking gameover
+const checkGameOver = (arr: number[][]) => {};
+
+// random 2 pop up in free space;
+const randomPopup = (arr: number[][]) => {
+  let newArr = arr.map((arr) => arr);
+  if (shouldPopUp) {
+    shouldPopUp = false;
+    let add = false;
+    let empty = checkSpace(arr);
+    while (!add && empty) {
+      const random1 = Math.floor(Math.random() * 4);
+      const random = Math.floor(Math.random() * 4);
+
+      if (newArr[random1][random] === 0) {
+        newArr[random1][random] = 2;
+        add = true;
+      }
+    }
+  }
+
+  return newArr;
 };
