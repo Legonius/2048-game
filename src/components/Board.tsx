@@ -5,13 +5,18 @@ import Restart from "./Restart";
 type Props = {};
 
 const Board = (props: Props) => {
-  const { restart, handleArrowKey, numbers } = useAllHooks();
+  const { restart, handleArrowKey, numbers, isGameOver } = useAllHooks();
 
   useEffect(() => {
     restart();
     window.addEventListener("keyup", handleArrowKey);
     return () => window.removeEventListener("keyup", handleArrowKey);
   }, []);
+  useEffect(() => {
+    if (isGameOver) {
+      console.log("Game Over");
+    }
+  }, [isGameOver]);
   if (!numbers) return <></>;
   return (
     <div className="game-panel">
