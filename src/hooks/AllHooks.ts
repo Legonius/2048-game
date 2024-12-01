@@ -6,11 +6,10 @@ type AllHooks = () => {
   restart: () => void;
   handleArrowKey: (ev: KeyboardEvent) => void;
   numbers: number[][];
-  score: number;
 };
 
 export default function useAllHooks(): ReturnType<AllHooks> {
-  const { setIsGameOver } = useGlobalState();
+  const { setIsGameOver, setScore } = useGlobalState();
   const [numbers, setNumbers] = useState<number[][]>([
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -24,7 +23,6 @@ export default function useAllHooks(): ReturnType<AllHooks> {
     movingUp,
     randomPopup,
     checkGameOver,
-    score,
   } = useHelperHooks({
     numbers,
     setNumbers,
@@ -32,6 +30,7 @@ export default function useAllHooks(): ReturnType<AllHooks> {
 
   // random number for starting array
   const restart = () => {
+    setScore(0);
     const count = 2;
     const initialNumber = [
       [0, 0, 0, 0],
@@ -74,5 +73,5 @@ export default function useAllHooks(): ReturnType<AllHooks> {
     });
   };
 
-  return { restart, handleArrowKey, numbers, score };
+  return { restart, handleArrowKey, numbers };
 }

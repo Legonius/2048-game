@@ -10,6 +10,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url("https://i0.wp.com/weirditaly.com/wp-content/uploads/2023/06/Gioco-morra-Bartolomeo-Pinelli.jpg?w=1200&ssl=1");
+  background-size: cover;
 }
 
 code {
@@ -25,14 +27,24 @@ code {
   align-items: center;
 }
 .main {
-  background-color: rgb(246, 241, 236);
   width: 60%;
+  min-width: 450px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   padding: 1rem 0;
+  background-color: rgba(0, 0, 0, 0.67);
+  border-radius: 20px;
+}
+h1,
+h2 {
+  color: white;
+}
+h1 > span {
+  color: wheat;
 }
 hr {
   width: 80%;
@@ -119,4 +131,13 @@ hr {
   font-size: 2rem;
   font-weight: 900;
   color: red;
+}
+.score-info {
+  color: blue;
+  font-weight: 700;
+}
+
+/* media query */
+
+@media (max-width: 450px) {
 }

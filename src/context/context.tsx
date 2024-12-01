@@ -5,10 +5,14 @@ type Tcontext = {
   isGameOver: boolean;
   setScore: React.Dispatch<React.SetStateAction<number>>;
   setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
+  moves: number;
+  setMoves: React.Dispatch<React.SetStateAction<number>>;
 };
 type Props = { children: ReactNode };
 const globalContext = createContext<Tcontext>({
   score: 0,
+  moves: 0,
+  setMoves: () => {},
   isGameOver: false,
   setScore: () => {},
   setIsGameOver: () => {},
@@ -17,6 +21,7 @@ const globalContext = createContext<Tcontext>({
 const ContextProviderWrapper = ({ children }: Props) => {
   const [totalScore, setTotalScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [moves, setMoves] = useState(0);
   return (
     <globalContext.Provider
       value={{
@@ -24,6 +29,8 @@ const ContextProviderWrapper = ({ children }: Props) => {
         isGameOver: gameOver,
         setScore: setTotalScore,
         setIsGameOver: setGameOver,
+        moves,
+        setMoves,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import React from "react";
+import { useGlobalState } from "../context/context";
 
 type TArray = number[][];
 type Props = {
@@ -12,12 +13,11 @@ type THelper = (Props: Props) => {
   movingUp: () => void;
   randomPopup: (arr: TArray) => TArray;
   checkGameOver: (arr: TArray) => boolean;
-  score: number;
 };
 
 const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
   let shouldPopUp = false;
-  let score: number = 2;
+  const { setScore, setMoves } = useGlobalState();
   // Chunk functions
 
   //filter zero
@@ -31,7 +31,8 @@ const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
       if (row[j] === row[j + 1]) {
         row[j] *= 2;
         row[j + 1] = 0;
-        score += row[j] * 2;
+        let addScore = row[j];
+        setScore((score) => score + addScore);
         shouldPopUp = true;
       }
     }
@@ -136,6 +137,7 @@ const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
       }
       if (JSON.stringify(currentNumbers) !== JSON.stringify(tempArray)) {
         shouldPopUp = true;
+        setMoves((move) => move + 1);
       }
       return tempArray;
     });
@@ -203,7 +205,6 @@ const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
     movingUp,
     randomPopup,
     checkGameOver,
-    score,
   };
 };
 
