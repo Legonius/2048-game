@@ -91,17 +91,29 @@ hr {
   background-color: red;
   color: white;
 }
-
-button {
+.new-game {
+  border: 2px white solid;
+  background-color: green;
+  color: white;
+  font-weight: 900;
+  padding: 0.5rem 1rem;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+.restart {
   border: 2px burlywood solid;
   padding: 0.5rem 1rem;
   transition: all 0.5s;
+  cursor: pointer;
 }
-button:hover {
+.restart:hover {
   background-color: rgb(222, 158, 60);
   color: white;
-  cursor: pointer;
   border-radius: 50%;
+}
+.new-game:hover {
+  background-color: rgb(7, 174, 7);
+  border-radius: 20%;
 }
 .game-over {
   font-size: 2rem;

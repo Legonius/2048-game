@@ -13,10 +13,6 @@ const Board = (props: Props) => {
     window.addEventListener("keyup", handleArrowKey);
     return () => window.removeEventListener("keyup", handleArrowKey);
   }, []);
-  useEffect(() => {
-    if (isGameOver) {
-    }
-  }, [isGameOver]);
 
   if (!numbers) return <></>;
   return (

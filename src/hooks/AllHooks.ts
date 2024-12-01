@@ -1,22 +1,22 @@
 import { useState } from "react";
 import useHelperHooks from "./HelperHooks";
+import { useGlobalState } from "../context/context";
 
 type AllHooks = () => {
   restart: () => void;
   handleArrowKey: (ev: KeyboardEvent) => void;
   numbers: number[][];
-  isGameOver: boolean;
   score: number;
 };
 
 export default function useAllHooks(): ReturnType<AllHooks> {
+  const { setIsGameOver } = useGlobalState();
   const [numbers, setNumbers] = useState<number[][]>([
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ]);
-  const [isGameOver, setIsGameOver] = useState(false);
   const {
     movingDown,
     movingLeft,
@@ -74,5 +74,5 @@ export default function useAllHooks(): ReturnType<AllHooks> {
     });
   };
 
-  return { restart, handleArrowKey, numbers, isGameOver, score };
+  return { restart, handleArrowKey, numbers, score };
 }
