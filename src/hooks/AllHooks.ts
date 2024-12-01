@@ -30,7 +30,10 @@ export default function useAllHooks(): ReturnType<AllHooks> {
 
   // random number for starting array
   const restart = () => {
-    setScore(0);
+    setTimeout(() => {
+      setScore(0);
+      setIsGameOver(false);
+    }, 0);
     const count = 2;
     const initialNumber = [
       [0, 0, 0, 0],
@@ -49,7 +52,6 @@ export default function useAllHooks(): ReturnType<AllHooks> {
       }
     }
     setNumbers(initialNumber);
-    setIsGameOver(false);
   };
 
   // handling arrow key

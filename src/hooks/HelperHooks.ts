@@ -32,7 +32,10 @@ const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
         row[j] *= 2;
         row[j + 1] = 0;
         let addScore = row[j];
-        setScore((score) => score + addScore);
+        //use setTimeout need (Defer Context Updates Using setTimeout: React prevents updates to a parent component (ContextProviderWrapper) during the render phase of a child component (Board).)
+        setTimeout(() => {
+          setScore((score) => score + addScore);
+        }, 0);
         shouldPopUp = true;
       }
     }
