@@ -6,6 +6,7 @@ type AllHooks = () => {
   handleArrowKey: (ev: KeyboardEvent) => void;
   numbers: number[][];
   isGameOver: boolean;
+  score: number;
 };
 
 export default function useAllHooks(): ReturnType<AllHooks> {
@@ -23,6 +24,7 @@ export default function useAllHooks(): ReturnType<AllHooks> {
     movingUp,
     randomPopup,
     checkGameOver,
+    score,
   } = useHelperHooks({
     numbers,
     setNumbers,
@@ -72,5 +74,5 @@ export default function useAllHooks(): ReturnType<AllHooks> {
     });
   };
 
-  return { restart, handleArrowKey, numbers, isGameOver };
+  return { restart, handleArrowKey, numbers, isGameOver, score };
 }

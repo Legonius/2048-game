@@ -12,11 +12,12 @@ type THelper = (Props: Props) => {
   movingUp: () => void;
   randomPopup: (arr: TArray) => TArray;
   checkGameOver: (arr: TArray) => boolean;
+  score: number;
 };
 
 const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
   let shouldPopUp = false;
-
+  let score: number = 2;
   // Chunk functions
 
   //filter zero
@@ -30,6 +31,7 @@ const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
       if (row[j] === row[j + 1]) {
         row[j] *= 2;
         row[j + 1] = 0;
+        score += row[j] * 2;
         shouldPopUp = true;
       }
     }
@@ -201,6 +203,7 @@ const useHelperHooks: THelper = ({ numbers, setNumbers }) => {
     movingUp,
     randomPopup,
     checkGameOver,
+    score,
   };
 };
 

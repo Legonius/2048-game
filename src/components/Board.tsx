@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAllHooks from "../hooks/AllHooks";
 import Restart from "./Restart";
+import { useGlobalState } from "../context/context";
 
 type Props = {};
 
 const Board = (props: Props) => {
-  const { restart, handleArrowKey, numbers, isGameOver } = useAllHooks();
-
+  const { restart, handleArrowKey, numbers } = useAllHooks();
+  const { isGameOver } = useGlobalState();
   useEffect(() => {
     restart();
     window.addEventListener("keyup", handleArrowKey);
@@ -14,12 +15,13 @@ const Board = (props: Props) => {
   }, []);
   useEffect(() => {
     if (isGameOver) {
-      console.log("Game Over");
     }
   }, [isGameOver]);
+
   if (!numbers) return <></>;
   return (
     <div className="game-panel">
+      {isGameOver && <span className="game-over">Game Over</span>}
       <div className="board">
         {numbers.map((arr) =>
           arr.map((x, index) => (

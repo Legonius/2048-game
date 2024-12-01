@@ -103,3 +103,8 @@ button:hover {
   cursor: pointer;
   border-radius: 50%;
 }
+.game-over {
+  font-size: 2rem;
+  font-weight: 900;
+  color: red;
+}
