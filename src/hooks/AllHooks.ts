@@ -63,11 +63,10 @@ export default function useAllHooks(): ReturnType<AllHooks> {
       movingDown();
     }
     setNumbers((prev) => {
+      randomPopup(prev);
       let gameOver = checkGameOver(prev);
       if (gameOver) {
         setIsGameOver(true);
-      } else {
-        randomPopup(prev);
       }
       return prev;
     });
